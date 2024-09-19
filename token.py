@@ -3,7 +3,9 @@ from .app_db import schemas
 from jose import jwt
 from jwt import InvalidTokenError
 
-SECRET_KEY = "b086e88600d0ce356b7b1d6b11ef9180196898222d5191c6710308b3eaa9ac13"
+# to get a string like this run:
+# openssl rand -hex 32
+SECRET_KEY = ""
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
