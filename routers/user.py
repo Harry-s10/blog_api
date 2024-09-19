@@ -13,15 +13,18 @@ router = APIRouter(
 @router.post("/")
 def create_user(request: schemas.UserCreate, db: Session = Depends(database.get_db),
                 current_user: schemas.User = Depends(oauth2.get_current_user)):
+    """Create new user"""
     return user_crud.create(request, db)
 
 
 @router.get("/{id}", response_model=schemas.UserDisplay)
 def get_user(id: int, db: Session = Depends(database.get_db)):
+    """Get user detail based on ID"""
     return user_crud.get_user(id, db)
 
 
 @router.get("/{id}/blogs", response_model=schemas.UserBlogs)
 def get_user_blogs(id: int, db: Session = Depends(database.get_db),
                    current_user: schemas.User = Depends(oauth2.get_current_user)):
+    """Get all user's blogs based on ID"""
     return user_crud.get_user(id, db)
