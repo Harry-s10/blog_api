@@ -31,3 +31,10 @@ def create(request: schemas.UserCreate, db: Session):
     db.commit()
     db.refresh(new_user)
     return new_user
+
+
+def get_user_id(email: str, db: Session):
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No user found with email {email}")
+    return user.id

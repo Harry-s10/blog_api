@@ -24,10 +24,13 @@ class Blog(BlogBase):
 class UserBase(BaseModel):
     name: str
     email: str
+    model_config = {
+        "from_attributes": True
+    }
 
 
 class UserCreate(UserBase):
-    password: SecretStr
+    password: str
 
 
 class User(UserCreate):
@@ -41,9 +44,6 @@ class User(UserCreate):
 class UserDisplay(UserBase):
     id: int
     is_active: bool
-    model_config: dict = {
-        "from_attributes": True
-    }
 
 
 class UserBlogs(UserBase):
@@ -57,3 +57,12 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: str | None = None
+
+
+class BlogDisplay(BlogBase):
+    id: int
+    creator: UserBase
+    timestamp: datetime
+    model_config = {
+        "from_attributes": True
+    }

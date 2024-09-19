@@ -12,13 +12,13 @@ router = APIRouter(
 )
 
 
-@router.get("/{id}", response_model=schemas.Blog)
+@router.get("/{id}", response_model=schemas.BlogDisplay)
 def get_blog(id: int, db: Session = Depends(database.get_db)):
     """Get the blog based on the ID"""
     return blog_crud.get_blog(db, id).first()
 
 
-@router.post("/", response_model=List[schemas.Blog])
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def create_blog(request: schemas.BlogBase, db: Session = Depends(database.get_db),
                 current_user: schemas.User = Depends(oauth2.get_current_user)):
     """Create new blog"""
@@ -26,7 +26,7 @@ def create_blog(request: schemas.BlogBase, db: Session = Depends(database.get_db
     return blog_crud.create_blog(db, new_blog, current_user)
 
 
-@router.get("/", response_model=List[schemas.Blog])
+@router.get("/", response_model=List[schemas.BlogDisplay])
 def get_all_blogs(db: Session = Depends(database.get_db)):
     """Get all the blogs"""
     return blog_crud.get_all_blogs(db)
