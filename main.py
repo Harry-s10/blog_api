@@ -1,11 +1,11 @@
 import uvicorn
 from fastapi import FastAPI
 
-from .app_db import database
-from .app_db import models
-from .routers import blog, login, user
+from app_db import models
+from app_db.database import engine
+from routers import blog, login, user
 
-models.Base.metadata.create_all(bind=database.engine)
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 

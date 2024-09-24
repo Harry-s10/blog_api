@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends, status
-from ..app_db import database, blog_crud, schemas
 from datetime import datetime, timezone
-from sqlalchemy.orm import Session
 from typing import List
 
-from .. import oauth2
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
+from app_db import blog_crud, database, schemas
+from authentication import get_current_active_user
 
 router = APIRouter(
         prefix="/blogs",
@@ -20,7 +21,7 @@ def get_blog(id: int, db: Session = Depends(database.get_db)):
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_blog(request: schemas.BlogBase, db: Session = Depends(database.get_db),
-                current_user: schemas.User = Depends(oauth2.get_current_user)):
+                current_user: schemas.User = Depends(get_current_active_user)):
     """Create new blog"""
     new_blog = schemas.BlogCreate(**request.model_dump(), timestamp=datetime.now(timezone.utc))
     return blog_crud.create_blog(db, new_blog, current_user)
@@ -34,7 +35,7 @@ def get_all_blogs(db: Session = Depends(database.get_db)):
 
 @router.put("/{id}", status_code=status.HTTP_202_ACCEPTED)
 def update_blog(id: int, request: schemas.BlogBase, db: Session = Depends(database.get_db),
-                current_user: schemas.User = Depends(oauth2.get_current_user)):
+                current_user: schemas.User = Depends(get_current_active_user)):
     """Update the blog"""
     updated_blog: schemas.BlogCreate = schemas.BlogCreate(**request.model_dump(), timestamp=datetime.now(timezone.utc))
     return blog_crud.update_blog(db, id, updated_blog)
@@ -42,6 +43,6 @@ def update_blog(id: int, request: schemas.BlogBase, db: Session = Depends(databa
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def remove_blog(id: int, db: Session = Depends(database.get_db),
-                current_user: schemas.User = Depends(oauth2.get_current_user)):
+                current_user: schemas.User = Depends(get_current_active_user)):
     """Remove the blog"""
     return blog_crud.remove_blog(db, id)
