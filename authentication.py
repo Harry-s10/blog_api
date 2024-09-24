@@ -9,7 +9,9 @@ from sqlalchemy.orm import Session
 
 from app_db import models, schemas
 
-SECRET_KEY = "04c998dd463a002005aaaca306f4553ebb157216c435087c63a088af67dad0fa"
+# to get a string like this run:
+# openssl rand -hex 32
+SECRET_KEY = ""
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
