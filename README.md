@@ -144,3 +144,13 @@ Here is a list of the core API endpoints:
     - `author_id`: Foreign key to the User who created the blog.
     - `created_at`: Timestamp of when the blog was created.
     - `updated_at`: Timestamp of when the blog was last updated.
+
+## Error Handling ⚠️
+The API returns appropriate HTTP status codes based on the operation:
+
+  - **200 OK**: Successful operation (e.g., retrieving a blog).
+  - **201 Created**: Blog post successfully created.
+  - **400 Bad Request**: Invalid input data.
+  - **401 Unauthorized**: User is not authenticated.
+  - **403 Forbidden**: User is not allowed to modify/delete someone else’s post.
+  - **404 Not Found**: Blog post or resource not found.
