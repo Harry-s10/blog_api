@@ -3,17 +3,6 @@
 This is a RESTful Blog API built using **FastAPI** that allows users to create, read, update and delete blog posts. The
 API supports user authentication, ensuring that only authenticated users can manage their own blog posts.
 
-## Table of Contents
-
-- [Features](#features)
-- [Technologies Used](#technologies_used)
-- [Getting Started](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Error Handling](#error-handling)
-
-
 ## Features 🌟
 
 - **Create a Blog Post**: Authenticated users can create blog posts with a title and body.
